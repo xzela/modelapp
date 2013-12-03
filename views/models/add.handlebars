@@ -1,0 +1,19 @@
+<h1>{{title}}</h1>
+<form method="POST" action="/add-model">
+	<label> Stage name: </label> <input name="stageName" type="text" value="" /> <br />
+	<label> Legal name: </label> <input name="fullLegalName" type="text" value="" /> <br />
+	<label> DOB: </label> <input name="dateOfBirth" type="text" value="" /> <br />
+	<br />
+	<label> Email: </label> <input name="email" type="text" value="" /> <br />
+	<label> Phone: </label> <input name="phoneNumber" type="text" value="" /> <br />
+
+	<label>
+	<label> Country: </label> <input name="country" type="text" value="" /> <br />
+	<br />
+	<input type="submit" name="submit" value="submit" />
+</form>
+<ul>
+	{{#each errors }}
+		<li> {{this.msg}} </li>
+	{{/each}}
+</ul>
