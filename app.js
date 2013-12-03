@@ -9,6 +9,7 @@ var user = require('./routes/user');
 var models = require('./routes/models');
 var http = require('http');
 var path = require('path');
+var request = require('request');
 var exphbs  = require('express3-handlebars');
 var validator = require('express-validator');
 
@@ -34,8 +35,8 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/', routes.index);
-app.get('/add-model', routes.add);
-app.post('/add-model', routes.add);
+app.get('/add-model', models.add);
+app.post('/add-model', models.add);
 
 // app.get('/users', user.list);
 // app.get('/models', models.index);
