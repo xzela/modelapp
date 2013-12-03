@@ -62,6 +62,14 @@ exports.add = function(req, response) {
       console.log(errors);
       page.errors = errors;
     }
+    else {
+      console.log("success");
+    }
   }
   response.render('./models/add', page);
 };
+
+exports.image = function(req, response) {
+  var data = {id: 12345};
+  response.json(data);
+}

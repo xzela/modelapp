@@ -9,6 +9,8 @@
     "request": "*",
     "express": "3.4.6",
     "express3-handlebars": "*",
-    "express-validator": "*"
+    "express-validator": "*",
+    "express": "*",
+    "express-winston": "*"
   }
 }
