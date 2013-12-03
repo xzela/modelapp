@@ -38,11 +38,6 @@ app.get('/', routes.index);
 app.get('/add-model', models.add);
 app.post('/add-model', models.add);
 
-// app.get('/users', user.list);
-// app.get('/models', models.index);
-// app.get('/models/list', models.list);
-// app.post('/models', models.add);
-
 http.createServer(app).listen(app.get('port'), function() {
   console.log('Express server listening on port ' + app.get('port'));
 });

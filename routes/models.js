@@ -4,6 +4,7 @@
  */
 
 function remote_add(fields, callback) {
+
   var model = {
     // "id": null,
     "version": 0,
@@ -34,14 +35,13 @@ function remote_add(fields, callback) {
     // "modifiedOn": null,
     // "modifiedBy": null
   };
-  var remote = request({
+  var options = {
       url: 'http://localhost:8090/kink-modelapplication-rest/modelapplication',
       method: 'POST',
       header: {'Content-type': 'application/json'},
       json: model
-    }, function(error, response, body) {
-      // console.log(error);
-      // console.log(response);
+  };
+  var remote = request(options, function(error, response, body) {
       console.log(body);
   });
 }
@@ -49,7 +49,14 @@ function remote_add(fields, callback) {
 exports.add = function(req, response) {
   var page = { title: 'Add a Live Model', message: '', errors: ''};
   if (req.method === 'POST') {
-    req.assert('name', 'Name is required').notEmpty();
+    page.fields = req.body;
+
+    req.assert('stageName', 'Stage Name is required').notEmpty();
+    req.assert('stageName', 'Stage Name should contain only alphanumeric characters').is(/^[a-zA-Z0-9\-\_]+$/, 'g');
+    req.assert('email', 'Email Address is not valid').isEmail();
+    req.assert('phoneNumber', 'Phone number can not be empty').notEmpty();
+    req.assert('phoneNumber', 'Phone numbers should not contain letters or weird ass characters.').is(/^[0-9\-\s\+]+$/, 'g');
+
     var errors = req.validationErrors();
     if (errors) {
       console.log(errors);
