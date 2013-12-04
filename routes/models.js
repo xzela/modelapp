@@ -2,6 +2,7 @@
 /*
  * GET / POST models routes.
  */
+var logger = require('../logger'); // load the logging
 
 function remote_add(fields, callback) {
 
@@ -23,14 +24,14 @@ function remote_add(fields, callback) {
     ],
     "country": "United Stated",
     "phoneNumber": "555-555-5555",
-    "idExpirationDate": [
+    idExpirationDate: [
       2013,
       12,
       2
     ],
-    "idPhotoUuid1": "fb5daf46-c1bd-42b6-9f6a-58ea49cd0aec",
-    "idPhotoUuid2": "fb5daf45-c1bd-42b6-9f6a-58ea49cd0aec",
-    "status": "PENDING",
+    idPhotoUuid1: "fb5daf46-c1bd-42b6-9f6a-58ea49cd0aec",
+    idPhotoUuid2: "fb5daf45-c1bd-42b6-9f6a-58ea49cd0aec",
+    status: "PENDING",
     // "createdOn": null,
     // "modifiedOn": null,
     // "modifiedBy": null
@@ -47,6 +48,7 @@ function remote_add(fields, callback) {
 }
 
 exports.add = function(req, response) {
+  logger.info("here");
   var page = { title: 'Add a Live Model', message: '', errors: ''};
   if (req.method === 'POST') {
     page.fields = req.body;
@@ -59,11 +61,11 @@ exports.add = function(req, response) {
 
     var errors = req.validationErrors();
     if (errors) {
-      console.log(errors);
+      logger.info(errors);
       page.errors = errors;
     }
     else {
-      console.log("success");
+      logger.info("success");
     }
   }
   response.render('./models/add', page);
