@@ -3,6 +3,7 @@
  * GET / POST models routes.
  */
 var logger = require('../logger'); // load the logging
+var request = require('request');
 
 function remote_add(fields, callback) {
 
@@ -44,6 +45,7 @@ function remote_add(fields, callback) {
   };
   var remote = request(options, function(error, response, body) {
       console.log(body);
+      callback();
   });
 }
 
@@ -66,6 +68,10 @@ exports.add = function(req, response) {
     }
     else {
       logger.info("success");
+      remote_add(page.fields, function() {
+        page.title = "model successfully added.";
+        response.render('./models/success', page);
+      });
     }
   }
   response.render('./models/add', page);
