@@ -1,20 +1,88 @@
-<h1>{{title}}</h1>
-<form method="POST" action="/add-model">
-	<label> Stage name: </label> <input name="stageName" type="text" value="{{ fields.stageName }}" /> <br />
-	<label> Legal name: </label> <input name="fullLegalName" type="text" value="{{ fields.fullLegalName }}" /> <br />
-	<label> DOB: </label> <input name="dateOfBirth" type="text" value="{{ fields.dateOfBirth }}" /> <br />
-	<label> ID Exp: </label> <input name="idExpirationDate" type="text" value="{{ fields.idExpirationDate }}" /> <br />
-	<br />
-	<label> Email: </label> <input name="email" type="text" value="{{ fields.email }}" /> <br />
-	<label> Phone: </label> <input name="phoneNumber" type="text" value="{{ fields.phoneNumber }}" /> <br />
 
-	<label> Country: </label> <input name="country" type="text" value="{{fields.country}}" /> <br />
+<style>
+	.form-group {
+		padding: 10px;
+	}
+	.form-group label {
+		font-weight: bold;
+		padding-right: 10px;
+	}
+	li.error {
+		color: red;
+	}
+</style>
+	<h1>{{title}}</h1>
+	<form class="form-horizontal" method="POST" action="/add-model" role="form">
+		<div class="form-group">
+			<label class="control-label">Member Id:</label>
+			<input id="memberId" name="memberId" type="hidden" value="1386014360861" />1386014360861
+		</div>
+		<div class="form-group">
+			<label class="control-label" for="stageName" > Stage Name: </label>
+			<input id="stageName" class="form-control" name="stageName" type="text" value="{{ fields.stageName }}" placeholder="Your Awesome Stage Name" required />
+		</div>
+		<div class="form-group">
+			<label for="fullLegalName" class="control-label"> Legal Name: </label>
+			<input id="fullLegalName" class="form-control" name="fullLegalName" type="text" value="{{ fields.fullLegalName }}" placeholder="Full Legal Name" required />
+		</div>
+		<div class="form-group">
+			<label for="dateOfBirth" class="control-label" > Date Of Birth: </label>
+			<input id="dateOfBirth" class="form-control" name="dateOfBirth" type="text" value="{{ fields.dateOfBirth }}" placeholder="mm/dd/yyyy" required />
+		</div>
+		<div class="form-group">
+			<label for="idExpirationDate" class="control-label"> ID Exp: </label>
+			<input id="idExpirationDate" class="fomr-control" name="idExpirationDate" type="text" value="{{ fields.idExpirationDate }}" placeholder="mm/dd/yyyy" required />
+		</div>
+		<div class="form-group">
+			<label for="email" class="control-label" >Email: </label>
+			<input id="email" class="form-control" name="email" type="email" value="{{ fields.email }}" placeholder="Your email address" required />
+		</div>
 
-	<br />
-	<input type="submit" name="submit" value="submit" />
-</form>
-<ul>
-	{{#each errors }}
-		<li class="error"> {{this.msg}} </li>
-	{{/each}}
-</ul>
+		<div class="form-group">
+			<label for="phoneNumber" class="control-label" > Phone: </label>
+			<input id="phoneNumber" class="form-control" name="phoneNumber" type="tel" value="{{ fields.phoneNumber }}" required />
+		</div>
+		<div class="form-group">
+			<label for="country" class="control-label" > Country: {{{fields.country}}}</label>
+			<select id="country" name="country" class="form-control">
+				<option value=""></option>
+				{{#each countries}}
+					<option value="{{this.value}}" {{{option_selector this.value fields.country }}} >{{this.name}}</option>
+				{{/each}}
+			</select>
+		</div>
+		{{!--
+
+ --}}
+		<div class="form-group">
+			<label for="phoneOne" class="control-label" >Photo One</label>
+			<input type="file" id="phoneOne" class="form-control">
+		</div>
+		<div class="form-group">
+			<label for="phoneTwo" class="control-label" >Photo Two</label>
+			<input type="file" id="phoneTwo" class="form-control">
+		</div>
+		<div class="form-group">
+			<label class="control-label"></label>
+			<input type="submit" name="submit" class="form-control btn btn-default" value="submit" />
+			<input id="auto_fill" type="button" name="auto_fill" class="form-control btn btn-default" value="auto fill" />
+		</div>
+	</form>
+	<ul>
+		{{#each errors }}
+			<li class="error"> {{this.msg}} </li>
+		{{/each}}
+	</ul>
+</div>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#auto_fill').bind('click', function() {
+			$('#stageName').val('Bad Billy');
+			$('#fullLegalName').val('William Willard');
+			$('#dateOfBirth').val('1982-05-23');
+			$('#idExpirationDate').val('2015-05-23');
+			$('#email').val('zeph@kink.com');
+			$('#phoneNumber').val('916-555-2222');
+		});
+	});
+</script>

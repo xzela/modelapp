@@ -1,5 +1,5 @@
 /**
- * Very Simple wrapper for logging
+ * Very Simple wrapper for logging with winston
  */
 
 var winston = require('winston'); // load the logging
