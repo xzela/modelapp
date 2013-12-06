@@ -18,10 +18,22 @@ exports.view = function(req, response) {
 };
 
 exports.upload = function(req, response) {
+	console.log("### intial upload");
 	var r = request.post('http://beta.kinklive.com/gobbler/AjaxUploadIdPhotoServlet.ajax', function(err, res, body) {
-		console.log("inside callback");
+		console.log("#### File uploaded to Gobbler!");
 		if (!err && res.statusCode == 200) {
-			response.send(body);
+			console.log("##### Gobblers still up and recieved the file");
+			var info = JSON.parse(body);
+			console.log(info);
+			if (info.success) {
+				console.log("##### Gobbler accepted the file. " + info.msg);
+				response.send(info);
+			}
+			else {
+				console.log("#### Gobbler made a boo boo. " + info.msg);
+				response.send(info.msg);
+			}
+
 		} else {
 			// console.log(error);
 			response.send(error);
@@ -29,8 +41,8 @@ exports.upload = function(req, response) {
 	});
 	var form = r.form();
 	form.append('file', fs.createReadStream(req.files.photo.path));
-	console.log("sending files");
-	// response.send("done");
+	console.log("### sending files...");
+	//response.send("done");
 };
 
 
