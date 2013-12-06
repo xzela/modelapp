@@ -1,10 +1,8 @@
 //http://beta.kinklive.com/gobbler/AjaxUploadIdPhotoServlet.ajax?qqfile=1fbKHlX.gif
 
-var http = require('http');
 var fs = require('fs');
 var path = require('path');
 var request = require('request');
-var FormData = require('form-data');
 
 function callback(error, response, body) {
 	console.log(response);
@@ -20,11 +18,19 @@ exports.view = function(req, response) {
 };
 
 exports.upload = function(req, response) {
-	var r = request.post('http://beta.kinklive.com/gobbler/AjaxUploadIdPhotoServlet.ajax', callback);
+	var r = request.post('http://beta.kinklive.com/gobbler/AjaxUploadIdPhotoServlet.ajax', function(err, res, body) {
+		console.log("inside callback");
+		if (!err && res.statusCode == 200) {
+			response.send(body);
+		} else {
+			// console.log(error);
+			response.send(error);
+		}
+	});
 	var form = r.form();
 	form.append('file', fs.createReadStream(req.files.photo.path));
-
-	response.send("done");
+	console.log("sending files");
+	// response.send("done");
 };
 
 
