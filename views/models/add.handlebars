@@ -12,7 +12,11 @@
 	}
 </style>
 	<h1>{{title}}</h1>
-
+	<ul>
+		{{#each errors }}
+			<li class="error"> {{this.msg}} </li>
+		{{/each}}
+	</ul>
 	<form class="form-horizontal" method="POST" action="/add-model" role="form">
 		<div class="form-group">
 			<label class="control-label">Member Id:</label>
@@ -56,6 +60,8 @@
 				<label class="control-label"></label>
 				<input type="submit" name="submit" class="form-control btn btn-default" value="submit" />
 				<input id="auto_fill" type="button" name="auto_fill" class="form-control btn btn-default" value="auto fill" />
+				<input id="idPhotoUuid1" name="idPhotoUuid1" type="text" value="{{fields.idPhotoUuid1}}"/>
+				<input id="idPhotoUuid2" name="idPhotoUuid2" type="text" value="{{fields.idPhotoUuid2}}"/>
 		</div>
 
 		<div class="form-group">
@@ -68,7 +74,7 @@
 					<label for="phoneOne" class="control-label photo" >Photo One</label>
 					<input type="file" id="phoneOne" class="form-control photo">
 					<span class="photo_message"></span>
-					<input id="idPhotoUuid1" class="photo-input" type="text" value="{{fields.idPhotoUuid1}}"/>
+					<input data="idPhotoUuid1" class="photo-input" type="text" value="{{fields.idPhotoUuid1}}"/>
 			</form>
 		</div>
 		<div class="form-gorup">
@@ -76,15 +82,10 @@
 				<label for="phoneTwo" class="control-label photo" >Photo Two</label>
 				<input type="file" id="phoneTwo" class="form-control photo">
 				<span class="photo_message"></span>
-				<input id="idPhotoUuid2" class="photo-input" type="text" value="{{fields.idPhotoUuid2}}"/>
+				<input data="idPhotoUuid2" class="photo-input" type="text" value="{{fields.idPhotoUuid2}}"/>
 			</form>
 		</div>
 	</div>
-	<ul>
-		{{#each errors }}
-			<li class="error"> {{this.msg}} </li>
-		{{/each}}
-	</ul>
 </div>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -103,6 +104,7 @@
 			var file = $(this)[0].files[0];
 			var p = $(this).siblings('.photo_message');
 			var input = $(this).siblings('.photo-input');
+			console.log(input.attr('data'));
 			formData.append('photo', file);
 			console.log(p);
 			// console.log($(this).val());
@@ -119,6 +121,7 @@
 					console.log(data)
 					if (data.fileUuid) {
 						input.val(data.fileUuid)
+						$('#' + input.attr('data')).val(data.fileUuid);
 					}
 					p.html('');
 				},
